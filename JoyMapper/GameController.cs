@@ -51,16 +51,16 @@ namespace JoyMapper
             return this.Connected ? this.joystick.GetCurrentState() : null;
         }
 
-        public void SendFFBEffect(Guid effectGuid, EffectParameters effectParams, int loopCount)
+        public void SendFFBEffect(Guid effectGuid, EffectParameters effectParams)
         {
             if (this.Connected)
             {
                 Effect effect = new Effect(this.joystick, effectGuid, effectParams);
-                if (effect != null)
-                {
-                    effect.Start(loopCount, EffectPlayFlags.NoDownload);
-                }
-                else
+                if (effect == null)
+                //{
+                //    effect.Start(loopCount, EffectPlayFlags.NoDownload);
+                //}
+                //else
                 {
                     // effect not supported
                     throw new Exception(string.Format("Force Feedback Effect '{0}' is not supported.", effectGuid));
