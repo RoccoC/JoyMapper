@@ -10,13 +10,13 @@ namespace JoyMapper
     /**
      * A wrapper around the DirectInput Joystick class.
      **/
-    class GameController
+    class GameController : IController
     {
         public String Name { get; private set; }
         public Guid ID { get; private set; }
         public Guid FFBDriverID { get; private set; }
         public bool Connected { get; private set; } = false;
-        public IList<EffectType> SupportedFFBEffects { get; private set; }
+        public IList<Guid> SupportedFFBEffects { get; private set; }
         public Capabilities Capabilities { get { return this.Connected ? this.joystick.Capabilities : null; } }
 
         private Joystick joystick;
@@ -28,10 +28,10 @@ namespace JoyMapper
             {
                 this.joystick = new Joystick(GameController.directInput, this.ID);
                 this.joystick.Acquire();
-                this.SupportedFFBEffects = new List<EffectType>();
+                this.SupportedFFBEffects = new List<Guid>();
                 foreach (EffectInfo effectInfo in this.joystick.GetEffects())
                 {
-                    this.SupportedFFBEffects.Add(effectInfo.Type);
+                    this.SupportedFFBEffects.Add(effectInfo.Guid);
                 }
                 this.Connected = true;
             }

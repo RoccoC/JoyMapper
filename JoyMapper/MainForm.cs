@@ -1,24 +1,15 @@
-﻿using SharpDX.DirectInput;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using vJoyInterfaceWrap;
 
 namespace JoyMapper
 {
     public partial class MainForm : Form
     {
-        private vJoy virtualJoystick;
-        private vJoy.JoystickState virtualJoystickState;
-        private const int virtualJoystickId = 1;
-
         public MainForm()
         {
             InitializeComponent();
             this.loadControllers();
-            bool enabled = this.initVirtualJoystick();
-
-
 
             //GameController controller = GameController.GetAll()[0];
             //controller.Connect();
@@ -49,13 +40,6 @@ namespace JoyMapper
                 controllerDictionary.Add(controller.Name, controller);
             }
             cboGameController.DataSource = new BindingSource(controllerDictionary, null);
-        }
-
-        private bool initVirtualJoystick()
-        {
-            this.virtualJoystick = new vJoy();
-            this.virtualJoystickState = new vJoy.JoystickState();
-            return this.virtualJoystick.vJoyEnabled();
         }
 
         private void cboGameController_SelectedIndexChanged(object sender, EventArgs e)
